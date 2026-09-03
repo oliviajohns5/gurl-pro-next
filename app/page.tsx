@@ -6,7 +6,7 @@ export default function Home() {
       <form className="card shorten" action="/api/shorten" method="post">
         <input name="url" placeholder="Paste a long URL" />
         <div className="row"><input name="slug" placeholder="Custom alias, optional" /><button className="btn">Shorten</button></div>
-        <small>Captcha/Turnstile will be enabled when production keys are configured.</small>
+        <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || ''}></div><small>Protected by Cloudflare Turnstile.</small>
       </form>
     </section>
     <section className="statgrid"><div className="stat"><b>137,974</b>existing short links</div><div className="stat"><b>4.6M</b>legacy click log rows</div><div className="stat"><b>836 MB</b>current MariaDB database</div></section>

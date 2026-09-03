@@ -13,23 +13,24 @@
     "build": "next build",
     "start": "next start",
     "lint": "node scripts/verify.mjs",
-    "verify": "node scripts/verify.mjs"
+    "verify": "node scripts/verify.mjs",
+    "db:push": "node scripts/push-schema.mjs",
+    "import:yourls": "node scripts/import-yourls-url.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "@libsql/client": "latest",
     "nanoid": "latest",
     "next": "latest",
-    "pg": "latest",
     "react": "latest",
     "react-dom": "latest",
     "zod": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",
-    "@types/pg": "^8.23.1",
     "@types/react": "latest",
     "typescript": "latest"
   }
