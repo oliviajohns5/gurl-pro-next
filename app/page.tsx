@@ -2,7 +2,17 @@ export default function Home() {
   return <main className="shell">
     <nav className="nav">
       <div className="brand"><span className="logo">g</span><span>gURL</span></div>
-      <div className="links"><a href="/about">About</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/report">Report abuse</a></div>
+      <div className="links"><a href="/about">About</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/report">Report abuse</a><a href="/admin">Admin</a></div>
+      <details className="mobile-menu">
+        <summary>Menu</summary>
+        <div className="mobile-links">
+          <a href="/about">About</a>
+          <a href="/terms">Terms</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/report">Report abuse</a>
+          <a href="/admin">Admin</a>
+        </div>
+      </details>
     </nav>
 
     <section className="hero">
