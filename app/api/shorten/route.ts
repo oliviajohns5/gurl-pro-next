@@ -9,8 +9,8 @@ export const preferredRegion = 'iad1'
 const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)
 
 export async function POST(req: NextRequest) {
-  const form = await req.formData()
   try {
+    const form = await req.formData()
     const ip = req.headers.get('x-forwarded-for')?.split(',')[0] || ''
     await assertRateLimit(ip)
     const captcha = await verifyTurnstile(String(form.get('cf-turnstile-response') || ''), ip)
