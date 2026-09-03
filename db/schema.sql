@@ -59,3 +59,9 @@ create table if not exists admin_settings (
   value text not null,
   updated_at text not null default (datetime('now'))
 );
+
+create table if not exists rate_limits (
+  key text primary key,
+  hits integer not null default 0,
+  updated_at text not null default (datetime('now'))
+);

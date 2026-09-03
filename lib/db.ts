@@ -2,6 +2,12 @@ import { createClient, type Client } from '@libsql/client'
 
 let client: Client | undefined
 
+async function sha256(value: string) {
+  const input = new TextEncoder().encode(value)
+  const digest = await crypto.subtle.digest('SHA-256', input)
+  return Array.from(new Uint8Array(digest)).map(b => b.toString(16).padStart(2, '0')).join('')
+}
+
 export function getClient() {
   const url = process.env.TURSO_DATABASE_URL
   const authToken = process.env.TURSO_AUTH_TOKEN
@@ -38,8 +44,8 @@ export async function incrementClick(slug: string, meta: { referrer?: string; us
     },
     {
       sql: `insert into recent_clicks(slug, clicked_at, referrer, user_agent, ip_hash)
-            values(?, datetime('now'), substr(?,1,500), substr(?,1,500), lower(hex(sha256(?))))`,
-      args: [slug, meta.referrer ?? '', meta.userAgent ?? '', meta.ip ?? ''],
+            values(?, datetime('now'), substr(?,1,500), substr(?,1,500), ?)`,
+      args: [slug, meta.referrer ?? '', meta.userAgent ?? '', await sha256(meta.ip ?? '')],
     },
   ], 'write')
 }

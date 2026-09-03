@@ -1,3 +1,5 @@
+import ShortenForm from './components/ShortenForm'
+
 export default function Home() {
   return <main className="shell">
     <nav className="nav">
@@ -31,21 +33,7 @@ export default function Home() {
         </ul>
       </div>
 
-      <form id="shorten" className="card shorten hero-card" action="/api/shorten" method="post">
-        <label>
-          <span>Long URL</span>
-          <input name="url" placeholder="https://example.com/very/long/link" />
-        </label>
-        <div className="row">
-          <label>
-            <span>Custom alias</span>
-            <input name="slug" placeholder="optional" />
-          </label>
-          <button className="btn">Shorten</button>
-        </div>
-        <div className="cf-turnstile" data-sitekey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || ''}></div>
-        <small>We check new links before saving them to help keep gURL safe.</small>
-      </form>
+      <ShortenForm siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || process.env.TURNSTILE_SITE_KEY || ''} />
     </section>
 
     <section className="featuregrid" aria-label="gURL features">
