@@ -2,10 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getClient } from '../../../../lib/db'
 
 export const preferredRegion = 'iad1'
-export async function GET() {
-  const result = await getClient().execute(
-    'select slug,destination_url,clicks,status,created_at from links order by created_at desc limit 100'
-  )
+export async function GET(req: NextRequest) {
+  const q = req.nextUrl.searchParams.get('q')?.trim() || ''
+  const status = req.nextUrl.searchParams.get('status') || 'active'
+  const where: string[] = []
+  const args: string[] = []
+  if (status !== 'all') { where.push('status = ?'); args.push(status) }
+  if (q) { where.push('(slug like ? or destination_url like ?)'); args.push(`%${q}%`, `%${q}%`) }
+  const whereSql = where.length ? `where ${where.join(' and ')}` : ''
+  const result = await getClient().execute({
+    sql: `select slug,destination_url,clicks,status,created_at from links ${whereSql} order by created_at desc limit 75`,
+    args,
+  })
   return NextResponse.json({ links: result.rows })
 }
 
@@ -31,5 +39,5 @@ export async function POST(req: NextRequest) {
       { sql: `update admin_summary set value = value + 1, updated_at = datetime('now') where key = ?`, args: [`${status}_links`] },
     ], 'write')
   }
-  return NextResponse.redirect(new URL('/admin', req.url), 303)
+  return NextResponse.json({ ok: true })
 }
