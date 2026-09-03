@@ -47,5 +47,10 @@ export async function incrementClick(slug: string, meta: { referrer?: string; us
             values(?, datetime('now'), substr(?,1,500), substr(?,1,500), ?)`,
       args: [slug, meta.referrer ?? '', meta.userAgent ?? '', await sha256(meta.ip ?? '')],
     },
+    {
+      sql: `insert into admin_summary(key, value, updated_at) values('total_clicks', 1, datetime('now'))
+            on conflict(key) do update set value = value + 1, updated_at = datetime('now')`,
+      args: [],
+    },
   ], 'write')
 }

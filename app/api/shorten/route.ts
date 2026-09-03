@@ -21,10 +21,11 @@ export async function POST(req: NextRequest) {
     let inserted = false
     for (let attempt = 0; attempt < 5 && !inserted; attempt++) {
       try {
-        await getClient().execute({
-          sql: 'insert into links(slug,destination_url,title,status,clicks,created_at,updated_at) values(?,?,?,?,0,datetime(\'now\'),datetime(\'now\'))',
-          args: [slug, destination, '', 'active'],
-        })
+        await getClient().batch([
+          { sql: 'insert into links(slug,destination_url,title,status,clicks,created_at,updated_at) values(?,?,?,?,0,datetime(\'now\'),datetime(\'now\'))', args: [slug, destination, '', 'active'] },
+          { sql: `insert into admin_summary(key,value,updated_at) values('total_links',1,datetime('now')) on conflict(key) do update set value=value+1, updated_at=datetime('now')`, args: [] },
+          { sql: `insert into admin_summary(key,value,updated_at) values('active_links',1,datetime('now')) on conflict(key) do update set value=value+1, updated_at=datetime('now')`, args: [] },
+        ], 'write')
         inserted = true
       } catch (error) {
         if (requested) throw new Error('This custom alias is already taken')

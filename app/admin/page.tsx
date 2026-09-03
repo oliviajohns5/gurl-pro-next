@@ -21,12 +21,12 @@ export default async function Admin({ searchParams }: { searchParams: Promise<Re
   const whereSql = where.length ? `where ${where.join(' and ')}` : ''
   const [counts, links, reports] = await Promise.all([
     db.execute(`select
-      count(*) as total_links,
-      sum(case when status='active' then 1 else 0 end) as active_links,
-      sum(case when status='blocked' then 1 else 0 end) as blocked_links,
-      sum(clicks) as total_clicks,
+      coalesce(max(case when key='total_links' then value end),0) as total_links,
+      coalesce(max(case when key='active_links' then value end),0) as active_links,
+      coalesce(max(case when key='blocked_links' then value end),0) as blocked_links,
+      coalesce(max(case when key='total_clicks' then value end),0) as total_clicks,
       (select count(*) from reports where status='new') as new_reports
-      from links`),
+      from admin_summary`),
     db.execute({ sql: `select slug,destination_url,clicks,status,created_at from links ${whereSql} order by created_at desc limit 75`, args }),
     db.execute("select id,slug,reason,email,message,status,created_at from reports where status='new' order by created_at desc limit 20"),
   ])

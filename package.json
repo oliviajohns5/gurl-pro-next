@@ -15,7 +15,8 @@
     "lint": "node scripts/verify.mjs",
     "verify": "node scripts/verify.mjs",
     "db:push": "node scripts/push-schema.mjs",
-    "import:yourls": "node scripts/import-yourls-url.mjs"
+    "import:yourls": "node scripts/import-yourls-url.mjs",
+    "summary:refresh": "node scripts/refresh-summary.mjs"
   },
   "keywords": [],
   "author": "",
