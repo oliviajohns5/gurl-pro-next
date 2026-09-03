@@ -1,0 +1,1 @@
+export default function Page() { return <main className="shell"><div className="card"><h1>Privacy</h1><p className="lead">Placeholder page for migrated gURL privacy policy. Legacy PHP content can be imported here before launch.</p></div></main> }
