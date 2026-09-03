@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   if (!req.nextUrl.pathname.startsWith('/admin') && !req.nextUrl.pathname.startsWith('/api/admin')) return NextResponse.next()
   const user = process.env.ADMIN_USERNAME || 'admin'
   const pass = process.env.ADMIN_PASSWORD
