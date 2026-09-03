@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getLink, incrementClick } from '../../lib/db'
 import { isReservedSlug } from '../../lib/reserved'
 
+export const preferredRegion = 'iad1'
 export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   if (isReservedSlug(slug)) return NextResponse.next()

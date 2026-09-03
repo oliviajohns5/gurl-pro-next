@@ -5,6 +5,7 @@ import { getClient } from '../../../lib/db'
 import { verifyTurnstile } from '../../../lib/turnstile'
 import { assertDestinationAllowed, assertRateLimit } from '../../../lib/safety'
 
+export const preferredRegion = 'iad1'
 const nanoid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)
 
 export async function POST(req: NextRequest) {

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getClient } from '../../../../lib/db'
 
+export const preferredRegion = 'iad1'
 export async function GET() {
   const result = await getClient().execute(
     'select slug,destination_url,clicks,status,created_at from links order by created_at desc limit 100'

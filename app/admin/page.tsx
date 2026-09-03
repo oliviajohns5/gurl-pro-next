@@ -1,6 +1,7 @@
 import { getClient } from '../../lib/db'
 
 export const dynamic = 'force-dynamic'
+export const preferredRegion = 'iad1'
 
 type LinkRow = { slug: string; destination_url: string; clicks: number; status: string; created_at: string }
 type ReportRow = { id: number; slug: string; reason: string; email: string; message: string; status: string; created_at: string }
